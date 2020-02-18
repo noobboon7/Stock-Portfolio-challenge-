@@ -5,7 +5,8 @@ class Api::V1::AuthController < ApplicationController
     user = User.find_by(email: user_params[:email])
     # 2 if user and password is valid
     if user && user.authenticate(user_params[:password])
-      token = encode_token(user.id)
+      
+      
       render json: {user: UserSerializer.new(user), token: token}
     else
       render json: {errors: "Incorrect email or password."}

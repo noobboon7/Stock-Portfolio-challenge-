@@ -1,4 +1,4 @@
-class StocksController < ApplicationController
+class Api::V1::StocksController < ApplicationController
   def buy_stock
     # find user trying purchase stock
     user = User.find(params[:userid])
