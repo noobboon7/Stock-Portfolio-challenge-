@@ -1,22 +1,34 @@
-import React, {useEffect} from 'react';
-import logo from './logo.svg';
+import React, {useState} from 'react';
+import { Route, Redirect, Switch } from "react-router-dom";
+import Portfolio from './containers/Portfolio';
+import Login from './containers/Login';
+import Register from './containers/Register';
 import './App.css';
 
-function App() {
-  useEffect(() => {
-    fetch(
-			"https://sandbox.iexapis.com/stable/stock/abt/batch?types=quote,news,chart&range=1m&last=10&token=Tsk_a65cd369988146b9a582fab3ceae6b0d",
-		)
-			.then(res => res.json())
-			.then(data => console.dir(data));
-  },[]);
+const App = () => {
+  const [loggedIn, setLogin] = useState(true);
+  
   return (
-    <div className="App">
-
-      <img src={logo} className="App-logo" alt="logo" />
-        
-    </div>
-  );
+		<div className='App'>
+			{loggedIn ? <Redirect to='/Portfolio' /> : <Redirect to='/Login' />}
+			<Switch>
+				<Route
+					path='/Register'
+					render={routerProps => <Register login={setLogin} />}
+				/>
+				<Route
+					path='/Login'
+					render={routerProps => <Login login={setLogin} />}
+				/>
+				<Route
+					exact
+					path='/Portfolio'
+					render={routerProps => <Portfolio login={setLogin}/>}
+				/>
+				<Route exact path='/Register' render={routerProps => <Register />} />
+			</Switch>
+		</div>
+	);
 }
-
+// {...routerProps} what is again?
 export default App;
