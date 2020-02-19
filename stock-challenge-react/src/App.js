@@ -3,7 +3,8 @@ import { Route, Redirect, Switch } from "react-router-dom";
 import Portfolio from './containers/Portfolio';
 import Login from './containers/Login';
 import Register from './containers/Register';
-import './App.css';
+import Transactions from './containers/Transactions';
+import './css/App.css';
 
 const App = () => {
   const [loggedIn, setLogin] = useState(true);
@@ -26,6 +27,7 @@ const App = () => {
 					render={routerProps => <Portfolio login={setLogin}/>}
 				/>
 				<Route exact path='/Register' render={routerProps => <Register />} />
+				<Route exact path='/Transactions' render={routerProps => <Transactions />} />
 			</Switch>
 		</div>
 	);
