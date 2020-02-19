@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { Route, Redirect, Switch } from "react-router-dom";
 import Portfolio from './containers/Portfolio';
 import Login from './containers/Login';
@@ -7,7 +7,30 @@ import Transactions from './containers/Transactions';
 import './css/App.css';
 
 const App = () => {
-  const [loggedIn, setLogin] = useState(true);
+	const [loggedIn, setLogin] = useState(false);
+	// const [user, setUser] = useState({});
+
+
+	// console.log(user)
+	// 	useEffect(() => {
+	// 		fetch("http://localhost:3000/api/v1/users", {
+	// 			method: "POST",
+	// 			headers: {
+	// 				"Content-Type": "application/json",
+	// 				Accept: "application/json",
+	// 			},
+	// 			body: JSON.stringify(user)
+	// 		})
+	// 			.then(res => res.json())
+	// 			.then(data => {
+	// 				if (data.errors) {
+	// 					alert(data.errors);
+	// 					console.error(data.errors);
+	// 				} else {
+
+	// 				}
+	// 			});
+	// 	}, [setUser]);
   
   return (
 		<div className='App'>
@@ -15,7 +38,7 @@ const App = () => {
 			<Switch>
 				<Route
 					path='/Register'
-					render={routerProps => <Register login={setLogin} />}
+					render={routerProps => <Register login={setLogin}  />}
 				/>
 				<Route
 					path='/Login'
@@ -24,10 +47,13 @@ const App = () => {
 				<Route
 					exact
 					path='/Portfolio'
-					render={routerProps => <Portfolio login={setLogin}/>}
+					render={routerProps => <Portfolio login={setLogin} />}
 				/>
-				<Route exact path='/Register' render={routerProps => <Register />} />
-				<Route exact path='/Transactions' render={routerProps => <Transactions />} />
+				<Route
+					exact
+					path='/Transactions'
+					render={routerProps => <Transactions />}
+				/>
 			</Switch>
 		</div>
 	);

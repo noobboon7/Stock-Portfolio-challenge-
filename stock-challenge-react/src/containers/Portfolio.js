@@ -16,6 +16,7 @@ const Portfolio = ({login}) => {
 		<div className='container'>
       <Header login={login}/>
 
+			<h1>Portfolio</h1>
 			<main className='portfolio'>
 				<Stock />
 				<Ticker />

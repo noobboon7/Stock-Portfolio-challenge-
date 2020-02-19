@@ -15,7 +15,6 @@ class Api::V1::UsersController < ApplicationController
       first_name: params[:first_name],
       last_name: params[:last_name],
       email: params[:email],
-			username: params[:username],
 			password: params[:password],
 		)
 		if user.save

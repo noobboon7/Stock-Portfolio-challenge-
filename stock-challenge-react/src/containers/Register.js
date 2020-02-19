@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button, FormGroup, FormControl, FormLabel } from "react-bootstrap";
 import "../css/Register.css";
 import { NavLink } from "react-router-dom";
@@ -7,16 +7,43 @@ export default function Register({login}){
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-     
+	const [password, setPassword] = useState("");
+	const [user, setUser] = useState({});
+
+
+	console.log(user);
+		// useContext for state
+		useEffect(() => {
+			fetch("http://localhost:3000/api/v1/users", {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+					"Accept": "application/json",
+				},
+				body: JSON.stringify(user),
+			})
+			.then(res => res.json())
+			.then(data => {
+				if (data.errors) {
+					alert(data.errors);
+					console.error(data.errors);
+				} else {
+					login(true);
+				}
+			});
+		}, []);
+
+	
   const validateForm = () => {
     return email.length > 0 && password.length > 0;
-  }
+  };
 
   const handleSubmit = (event) => {
-    event.preventDefault();
-    login(true);
-  }
+		event.preventDefault();
+		setUser({firstName, lastName, email, password});
+		// createUser()
+	};
+	
   return (
 		<div className='Register'>
 			<form onSubmit={handleSubmit}>
