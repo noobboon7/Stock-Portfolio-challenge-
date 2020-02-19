@@ -42,7 +42,7 @@ const Login = ({login}) => {
 					Login
 				</Button>
 			</form>
-			<div className='ui message'>
+			<div className='register__link'>
 				<h5>
 					Not a member yet? <NavLink to='/Register'> Register </NavLink>
 				</h5>

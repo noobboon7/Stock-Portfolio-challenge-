@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Button, FormGroup, FormControl, FormLabel } from "react-bootstrap";
 import "../css/Register.css";
+import { NavLink } from "react-router-dom";
 
 export default function Register({login}){
   const [firstName, setFirstName] = useState("");
@@ -60,6 +61,12 @@ export default function Register({login}){
 					Create Account
 				</Button>
 			</form>
+			<div className="login__link"> 
+			<h5>
+
+			</h5>
+				Have an account?  <NavLink to="/Login">Login</NavLink>
+			</div>
 		</div>
 	);
 
