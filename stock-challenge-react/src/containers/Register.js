@@ -4,27 +4,32 @@ import "../css/Register.css";
 import { NavLink } from "react-router-dom";
 
 export default function Register({}){
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
+  const [first_name, setFirstName] = useState("");
+  const [last_name, setLastName] = useState("");
   const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
-	const [user, setUser] = useState(null);
+	// const [user, setUser] = useState(null);
 
 
 	// console.log(user);
 		
-		async function createUser(user) {
-			debugger
-			const res = await fetch("http://localhost:3000/api/v1/users", {
-				method: "POST",
-				headers: {
-					"Content-Type": "application/json",
-					"Accept": "application/json",
-				},
-			body: JSON.stringify(user),
+	const createUser = async (newUser) => {
+
+		const res = await fetch("http://localhost:3000/api/v1/users", {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+				"Accept": "application/json",
+			},
+			body: JSON.stringify(newUser),
 		});
 		const data = await res.json();
-		console.log(data)
+		if(!data.errors){
+			console.log(data)
+		} else {
+			alert(data.errors)
+			console.error(data.errors)
+		}
 	}
 
 	const validateForm = () => {
@@ -33,8 +38,7 @@ export default function Register({}){
 	
 	const handleSubmit = (event) => {
 		event.preventDefault();
-		setUser({firstName, lastName, email, password});
-		console.log(user)
+		createUser({first_name, last_name, email, password});
 	};	
 	
 			
@@ -43,21 +47,21 @@ export default function Register({}){
   return (
 		<div className='Register'>
 			<form onSubmit={handleSubmit}>
-				<FormGroup controlId='firstName' bsSize='large'>
+				<FormGroup controlId='first_name' bsSize='large'>
 					<FormLabel>First Name</FormLabel>
 					<FormControl
 						autoFocus
 						type='string'
-						value={firstName}
+						value={first_name}
 						onChange={e => setFirstName(e.target.value)}
 					/>
 				</FormGroup>
 
-				<FormGroup controlId='lastName' bsSize='large'>
+				<FormGroup controlId='last_name' bsSize='large'>
 					<FormLabel>Last Name</FormLabel>
 					<FormControl
 						type='string'
-						value={lastName}
+						value={last_name}
 						onChange={e => setLastName(e.target.value)}
 					/>
 				</FormGroup>
@@ -65,7 +69,6 @@ export default function Register({}){
 				<FormGroup controlId='email' bsSize='large'>
 					<FormLabel>Email</FormLabel>
 					<FormControl
-
 						type='email'
 						value={email}
 						onChange={e => setEmail(e.target.value)}
@@ -91,5 +94,4 @@ export default function Register({}){
 			</div>
 		</div>
 	);
-
 }

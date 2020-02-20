@@ -1,7 +1,9 @@
 class User < ApplicationRecord
   validates :email, uniqueness: { case_sensitive: false }, format: { with: URI::MailTo::EMAIL_REGEXP }, presence: true
+  # validates :first_name, presence: true
+  # validates :last_name, presence: true
   validates :password, presence: true
-  attribute :money_amount, :float, default: 5000.00
+  attribute :wallet, :float, default: 5000.00
 
   has_many :stocks
 

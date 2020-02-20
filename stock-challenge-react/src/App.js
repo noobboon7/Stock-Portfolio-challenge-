@@ -9,13 +9,14 @@ import './css/App.css';
 const App = () => {
 	const [loggedIn, setLogin] = useState(!true);
 	const [user, setUser] = useState(null);
-	// const [token, setToken] = useState(null)
+	const [userStock, setUserStock] = useState(null);
 	const localToken = localStorage.token;
-
+	
+	console.log({...user});
 	useEffect(() => {
 		if(localToken){
 			fetchCurrentUser(localToken);
-			console.log('token useEffect ran')
+			console.log('token useEffect ran');
 		}
 	}, [localToken]);
 
@@ -37,7 +38,6 @@ const App = () => {
     })
 		.then(resp => resp.json())
 		.then(data => {
-			console.log(data);
 			if(!data.errors){
 				setUser(data);
 			} else {
@@ -60,7 +60,7 @@ const App = () => {
 		.then(data => {
 			if(!data.errors){
 				// set user to state and localstorage for auto login
-				setUser(data.user);
+				setUser(data);
 				localStorage.setItem("token", data.token);
 			}else {
 				alert(data.errors);
@@ -77,7 +77,7 @@ const App = () => {
 			<Switch>
 				<Route
 					path='/Register'
-					render={routerProps => <Register createUser={setUser} />}
+					render={routerProps => <Register />}
 				/>
 				<Route
 					path='/Login'
@@ -86,7 +86,7 @@ const App = () => {
 				<Route
 					exact
 					path='/Portfolio'
-					render={routerProps => <Portfolio logout={setLogin} />}
+					render={routerProps => <Portfolio logout={setLogin} userData={{...user}} />}
 				/>
 				<Route
 					exact

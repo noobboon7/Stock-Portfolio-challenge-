@@ -2,7 +2,7 @@ import React from 'react';
 
 
 // find current user stock if none purchase
-const Stock = ({}) => (
+const Stock = () => (
 
   <div>
 

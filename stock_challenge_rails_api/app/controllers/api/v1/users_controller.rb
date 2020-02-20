@@ -4,26 +4,21 @@ class Api::V1::UsersController < ApplicationController
   #   @users= User.all
   #   render json: @users
   # end
-
-  def show
-    @user = User.find(user_params[:email])
-    render json: {user: UserSerializer.new(@user)}
-	end
+	
+  # def show
+  #   @user = User.find(user_params[:email])
+  #   render json: {user: UserSerializer.new(@user)}
+	# end
 	###########################
+	wrap_parameters :user, include: [:first_name, :last_name, :email, :password]
 	
   def create
-		byebug
-		user = User.new(
-      first_name: user_params[:first_name],
-      last_name: user_params[:last_name],
-      email: user_params[:email],
-			password: user_params[:password],
-		)
-		byebug
+		# "first_name" ruby, "first_name" is coming from React obj			
+		user = User.new(user_params)
 		if user.save
 			token = encode_token(user.id)
-      # token used if autologin is implemented
-			render json: {user: UserSerializer.new(user), token: token}
+			# token sent to keep user signed in on refresh
+			render json: {user: UserSerializer.new(user), token: token}, status: :created
 		else
 			render json: {errors: user.errors.full_messages}
 		end
