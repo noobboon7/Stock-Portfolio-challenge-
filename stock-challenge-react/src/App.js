@@ -77,7 +77,7 @@ const App = () => {
 			<Switch>
 				<Route
 					path='/Register'
-					render={routerProps => <Register />}
+					render={routerProps => <Register login={setUser}/>}
 				/>
 				<Route
 					path='/Login'

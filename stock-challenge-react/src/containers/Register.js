@@ -3,12 +3,12 @@ import { Button, FormGroup, FormControl, FormLabel } from "react-bootstrap";
 import "../css/Register.css";
 import { NavLink } from "react-router-dom";
 
-export default function Register({}){
+export default function Register({login}){
   const [first_name, setFirstName] = useState("");
   const [last_name, setLastName] = useState("");
   const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
-	// const [user, setUser] = useState(null);
+
 
 
 	// console.log(user);
@@ -25,6 +25,8 @@ export default function Register({}){
 		});
 		const data = await res.json();
 		if(!data.errors){
+			login(data.user)
+			localStorage.setItem('token',data.token)
 			console.log(data)
 		} else {
 			alert(data.errors)
