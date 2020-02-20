@@ -11,6 +11,7 @@ class ApplicationController < ActionController::API
 
   # decodes JWT user token for autologin -> implement next
   def decode_token
+    # byebug
     begin
       JWT.decode(get_auth_headers, "userSecret")[0]["user_id"]
     rescue

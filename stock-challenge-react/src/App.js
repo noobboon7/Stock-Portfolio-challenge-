@@ -6,13 +6,13 @@ import Register from './containers/Register';
 import Transactions from './containers/Transactions';
 import './css/App.css';
 
+
 const App = () => {
 	const [loggedIn, setLogin] = useState(!true);
 	const [user, setUser] = useState(null);
 	const [userStock, setUserStock] = useState(null);
 	const localToken = localStorage.token;
 	
-	console.log({...user});
 	useEffect(() => {
 		if(localToken){
 			fetchCurrentUser(localToken);
@@ -61,6 +61,7 @@ const App = () => {
 			if(!data.errors){
 				// set user to state and localstorage for auto login
 				setUser(data);
+				// set stocks for user
 				localStorage.setItem("token", data.token);
 			}else {
 				alert(data.errors);
@@ -91,7 +92,7 @@ const App = () => {
 				<Route
 					exact
 					path='/Transactions'
-					render={routerProps => <Transactions />}
+				render={routerProps => <Transactions userData={{...user}} />}
 				/>
 			</Switch>
 		</div>
