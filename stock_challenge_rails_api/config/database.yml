@@ -81,5 +81,5 @@ test:
 production:
   <<: *default
   database: stock_challenge_rails_api_production
-  username: stock_challenge_rails_api
+  email: stock_challenge_rails_api
   password: <%= ENV['STOCK_CHALLENGE_RAILS_API_DATABASE_PASSWORD'] %>

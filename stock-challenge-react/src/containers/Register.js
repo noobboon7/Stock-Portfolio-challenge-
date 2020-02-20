@@ -3,47 +3,43 @@ import { Button, FormGroup, FormControl, FormLabel } from "react-bootstrap";
 import "../css/Register.css";
 import { NavLink } from "react-router-dom";
 
-export default function Register({login}){
+export default function Register({}){
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
-	const [user, setUser] = useState({});
+	const [user, setUser] = useState(null);
 
 
-	console.log(user);
-		// useContext for state
-		useEffect(() => {
-			fetch("http://localhost:3000/api/v1/users", {
+	// console.log(user);
+		
+		async function createUser(user) {
+			debugger
+			const res = await fetch("http://localhost:3000/api/v1/users", {
 				method: "POST",
 				headers: {
 					"Content-Type": "application/json",
 					"Accept": "application/json",
 				},
-				body: JSON.stringify(user),
-			})
-			.then(res => res.json())
-			.then(data => {
-				if (data.errors) {
-					alert(data.errors);
-					console.error(data.errors);
-				} else {
-					login(true);
-				}
-			});
-		}, []);
+			body: JSON.stringify(user),
+		});
+		const data = await res.json();
+		console.log(data)
+	}
 
-	
-  const validateForm = () => {
-    return email.length > 0 && password.length > 0;
-  };
-
-  const handleSubmit = (event) => {
-		event.preventDefault();
-		setUser({firstName, lastName, email, password});
-		// createUser()
+	const validateForm = () => {
+		return email.length > 0 && password.length > 0;
 	};
 	
+	const handleSubmit = (event) => {
+		event.preventDefault();
+		setUser({firstName, lastName, email, password});
+		console.log(user)
+	};	
+	
+			
+		
+
   return (
 		<div className='Register'>
 			<form onSubmit={handleSubmit}>
@@ -60,7 +56,6 @@ export default function Register({login}){
 				<FormGroup controlId='lastName' bsSize='large'>
 					<FormLabel>Last Name</FormLabel>
 					<FormControl
-						autoFocus
 						type='string'
 						value={lastName}
 						onChange={e => setLastName(e.target.value)}
@@ -70,7 +65,7 @@ export default function Register({login}){
 				<FormGroup controlId='email' bsSize='large'>
 					<FormLabel>Email</FormLabel>
 					<FormControl
-						autoFocus
+
 						type='email'
 						value={email}
 						onChange={e => setEmail(e.target.value)}

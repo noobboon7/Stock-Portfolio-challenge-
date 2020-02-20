@@ -4,7 +4,7 @@ import { withRouter, NavLink } from "react-router-dom";
 import { Button, FormGroup, FormControl, FormLabel } from "react-bootstrap";
 import '../css/Login.css';
 
-const Login = ({login}) => {
+const Login = ({fetchLogin}) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   
@@ -14,8 +14,8 @@ const Login = ({login}) => {
   }
 
   const handleSubmit = event => {
-    event.preventDefault();
-    login(true);
+		event.preventDefault();
+    fetchLogin({email, password});
   }
 
   return (

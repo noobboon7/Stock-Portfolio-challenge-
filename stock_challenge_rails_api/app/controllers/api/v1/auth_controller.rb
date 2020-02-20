@@ -2,11 +2,10 @@ class Api::V1::AuthController < ApplicationController
   
   def login
     # 1 find the user associated with the email
-    user = User.find_by(email: user_params[:email])
+    user = User.find_by(email: params[:email])
     # 2 if user and password is valid
-    if user && user.authenticate(user_params[:password])
-      
-      
+    if user && user.authenticate(params[:password])
+      token = encode_token(user.id)
       render json: {user: UserSerializer.new(user), token: token}
     else
       render json: {errors: "Incorrect email or password."}
@@ -27,7 +26,7 @@ class Api::V1::AuthController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:email, :username, :password)
+    params.require(:user).permit(:email, :password)
   end
 
 end

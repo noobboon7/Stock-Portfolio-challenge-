@@ -3,10 +3,12 @@ import { withRouter, NavLink } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 
 
-const Header = ({login}) => {
+const Header = ({logout}) => {
   const handleLogout = () => {
-    login(false);
+    logout(false);
+    localStorage.removeItem("token");
   };
+
   return(
     <header>
       <Button variant='danger' onClick={handleLogout}>
