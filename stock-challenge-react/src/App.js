@@ -6,20 +6,14 @@ import Register from './containers/Register';
 import Transactions from './containers/Transactions';
 import './css/App.css';
 
-
+ 
 const App = () => {
 	const [loggedIn, setLogin] = useState(!true);
 	const [user, setUser] = useState(null);
-	// const [userStock, setUserStock] = useState(null);
+	const [userStocks, setUserStocks] = useState(null);
 	const localToken = localStorage.token;
+	console.log(userStocks)
 	
-	useEffect(() => {
-		if(localToken){
-			fetchCurrentUser(localToken);
-			console.log('token useEffect ran');
-		}
-	}, [localToken]);
-
 	useEffect(() => {
 		if(user){
 			setLogin(true);
@@ -27,13 +21,35 @@ const App = () => {
 		}
 	},[user]);
 
-	const fetchCurrentUser = (token) => {
+	useEffect(() => {
+		if(localToken){
+			fetchCurrentUser(localToken);
+			getUserStocks();
+			console.log('token useEffect ran');
+		}
+	}, [localToken]);
+
+
+	const getUserStocks = () => {
+		fetch(`http://localhost:3000/api/v1/getStocks`, {
+			method: "GET",
+			headers: {
+				"Content-Type": "application/json",
+				Accept: "application/json",
+				Authorization: localStorage.token,
+			},
+		})
+			.then(res => res.json())
+			.then(data => setUserStocks(data));
+	};
+
+	const fetchCurrentUser = () => {
 		fetch(`http://localhost:3000/api/v1/auto_login`, {
         method: "GET",
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
-          'Authorization': `${token}`
+          'Authorization': localStorage.token
         }
     })
 		.then(resp => resp.json())
@@ -91,7 +107,7 @@ const App = () => {
 				<Route
 					exact
 					path='/Transactions'
-				render={routerProps => <Transactions userData={{...user}} />}
+				render={routerProps => <Transactions stocks={userStocks} userData={user} />}
 				/>
 			</Switch>
 		</div>

@@ -21,12 +21,13 @@ const Login = ({fetchLogin}) => {
   return (
 		<div className='Login'>
 			<form onSubmit={handleSubmit}>
-				<FormGroup controlId='email' bsSize='large'>
+				<FormGroup controlId='email' bssize='large'>
 					<FormLabel>Email</FormLabel>
 					<FormControl
 						autoFocus
 						type='email'
 						value={email}
+						placeholder='email@example.com'
 						onChange={e => setEmail(e.target.value)}
 					/>
 				</FormGroup>
@@ -36,6 +37,7 @@ const Login = ({fetchLogin}) => {
 						value={password}
 						onChange={e => setPassword(e.target.value)}
 						type='password'
+						placeholder='Password'
 					/>
 				</FormGroup>
 				<Button block bsSize='large' disabled={!validateForm()} type='submit'>

@@ -3,6 +3,7 @@
   flex-direction: column;
   height: 100%;
   width: 100%;
+  
 }
 header {
   display: flex;
@@ -14,5 +15,10 @@ header {
 .portfolio {
   display: flex;
   justify-content: space-between;
-  
+
+  margin: 1rem 0 1rem 0;
+  padding: 1.5rem;
+  box-shadow: 2px 2px 7px 2px rgba(0, 0, 0, 0.2);
+  background-color: rgba(235, 233, 233, 0.178);
+  border-radius: 3px;
 }

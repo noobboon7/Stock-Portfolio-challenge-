@@ -6,7 +6,9 @@ const Ticker = ({wallet, fetchStock}) => {
 	const [stock, setStock] = useState("");
 	const [quantity, setQuantity] = useState("");
 
-	// console.log()
+	const validateForm = () => {
+		return stock.length > 0 && quantity > 0;
+	};
 
 	const handleSubmit = event => {
 		event.preventDefault();
@@ -34,7 +36,12 @@ const Ticker = ({wallet, fetchStock}) => {
 						type='number'
 					/>
 				</FormGroup>
-				<Button variant='success' block bsSize='large' type='submit'>
+				<Button
+					variant='success'
+					block
+					bsSize='large'
+					disabled={!validateForm()}
+					type='submit'>
 					BUY!!!
 				</Button>
 			</form>
