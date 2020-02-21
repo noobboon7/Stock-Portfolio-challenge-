@@ -11,7 +11,7 @@ pending
 
 ### More about Developer Jerry V
 
-[linkedin](https://linkedin.com/in/jerry-velazquez-8540b9bb/)
-[website](https://www.jerryvee.com/)
-[blog](https://medium.com/@jvr572)
-[twitter](https://twitter.com/JvScripts_)
+- [linkedin](https://linkedin.com/in/jerry-velazquez-8540b9bb/)
+- [website](https://www.jerryvee.com/)
+- [blog](https://medium.com/@jvr572)
+- [twitter](https://twitter.com/JvScripts_)

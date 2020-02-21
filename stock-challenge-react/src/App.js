@@ -10,7 +10,7 @@ import './css/App.css';
 const App = () => {
 	const [loggedIn, setLogin] = useState(!true);
 	const [user, setUser] = useState(null);
-	const [userStock, setUserStock] = useState(null);
+	// const [userStock, setUserStock] = useState(null);
 	const localToken = localStorage.token;
 	
 	useEffect(() => {
@@ -69,7 +69,6 @@ const App = () => {
 			}
 		});
 	};
-
 				
 	return (
 		<div className='App'>

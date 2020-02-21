@@ -24,4 +24,11 @@ class Api::V1::StocksController < ApplicationController
 			render json: {errors: "Need more funds to purchase."}
     end
   end
+
+  def get_user_stock
+    user = User.find_by(id:decode_token)
+    stocks = user.stocks
+
+    render json: stocks, each_serializer: StockSerializer
+  end
 end

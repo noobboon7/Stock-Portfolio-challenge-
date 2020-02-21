@@ -6,10 +6,8 @@ import "../css/Portfolio.css";
 
 const Portfolio = ({ logout, userData }) => {
 	const {wallet, email} = {...userData}
-	console.log(wallet, email)
 	const [fetchedStock, setFetchedStock] = useState(null);
 	const API_KEY = process.env.REACT_APP_IEX_API_KEY;
-	const tkn = localStorage.getItem('token');
 
 	// console.log(tkn,fetchedStock);
 
@@ -30,7 +28,6 @@ const Portfolio = ({ logout, userData }) => {
 		};
 		
 		const buyStockFetch = (stock) => {
-			debugger
 			fetch(`http://localhost:3000/api/v1/buyStock`, {
 				method: "POST",
 				headers: {
@@ -41,8 +38,9 @@ const Portfolio = ({ logout, userData }) => {
 			})
 			.then(res => res.json())
 			.then(data => {
-				console.log(...data)
-				setFetchedStock(data); 
+				let obj = data.userData;
+				console.log(obj);
+				setFetchedStock(obj); 
 				// remove loading 
 			})
 	};
@@ -55,8 +53,8 @@ const Portfolio = ({ logout, userData }) => {
 				<h1>Portfolio(Current stock performance)</h1>
 			</div>
 			<main className='portfolio'>
-				<Stock />
-				<Ticker fetchStock={fetchStockIEX} wallet={userData.wallet} />
+				<Stock stock={fetchedStock}/>
+				<Ticker fetchStock={fetchStockIEX} wallet={wallet} />
 			</main>
 		</div>
 	);

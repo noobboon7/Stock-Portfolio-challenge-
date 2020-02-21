@@ -1,0 +1,59 @@
+.container{
+  display: flex;
+  flex-direction: column;
+}
+
+.transactions {
+  display: flex;
+  justify-content: space-around;
+}
+
+.purchases {
+  width: 40%;
+  margin: 1rem 0 1rem 0;
+  padding: 1.5rem;
+  box-shadow: 3px 3px 2px 1px rgba(0, 0, 0, 0.2);
+  background-color: rgba(235, 233, 233, 0.178);
+  border-radius: 3px;
+}
+
+.purchases h1 {
+  text-align: center;
+  text-decoration: underline;
+}
+
+.list__item{
+  margin: 5px;
+  padding: 1rem;
+  height: 4rem;
+  align-self: center;
+  box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+  font-size: 20px;
+}
+
+.user__info {
+  height: 40%;
+  width: 40%;
+  margin: 1rem ;
+  padding: 1.5rem;
+  box-shadow: 3px 3px 2px 1px rgba(103, 110, 107, 0.2);
+  background-color: rgba(204, 204, 204, 0.178);
+  border-radius: 5px;
+}
+
+.user__info h2 {
+  text-align: center;
+  text-decoration: underline;
+}
+
+.user__info ul {
+  text-align: center;
+  list-style: none;
+}
+
+.user__info li {
+  margin-right: 2rem;
+  padding: 1rem;
+  font-size: 20px;
+}

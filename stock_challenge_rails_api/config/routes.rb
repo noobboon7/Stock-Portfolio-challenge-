@@ -6,6 +6,7 @@ Rails.application.routes.draw do
       resources :users
     
       get "/auto_login", to: "auth#auto_login"
+      get "/getStocks", to: "stocks#get_user_stock"
       post "/login", to: "auth#login"
       post "/buyStock", to: "stocks#buy_stock"
     end
