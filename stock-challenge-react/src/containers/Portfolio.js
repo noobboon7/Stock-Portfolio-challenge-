@@ -10,23 +10,22 @@ const Portfolio = ({ logout, user ,stocks, shares, refreshStks, refreshUser }) =
 
 	// this can go in ticker
 	const fetchStockIEX = (symbol, quantity) => {
+		console.log("receiving:", symbol, quantity)
 		fetch(
-			`https://sandbox.iexapis.com/stable/stock/${symbol}/batch?types=quote,news,chart&range=1m&last=10&token=${API_KEY}`,
+			`https://sandbox.iexapis.com/stable/stock/${symbol}/batch?types=quote,news&range=1m&last=10&token=${API_KEY}`,
 		)
 			.then(res => res.json())
 			.then(data => {
-				// console.dir(data.quote);
-				if (!data) {
+				if (data) {
 					let setStock = data.quote,
-						numStocks = parseInt(quantity),
-						{ symbol, latestPrice } = { ...setStock };
+					numStocks = parseInt(quantity),
+					{ symbol, latestPrice } = { ...setStock };
 					// set loading
 					buyStockFetch({ numStocks, symbol, latestPrice, email });
-				} else {
-				}
+				} 
 			})
 			.catch(function() {
-				alert("Tiker symbol Not found?")
+				alert("Tiker symbol Not found?");
 			});
 	};
 	// can use token instead of email
@@ -41,13 +40,16 @@ const Portfolio = ({ logout, user ,stocks, shares, refreshStks, refreshUser }) =
 		})
 			.then(res => res.json())
 			.then(data => {
-				let user = data.userData.user;
-				console.log(user);
-				console.log(data);
-				refreshUser(user);
-				refreshStks();
-				// remove loading
-			});
+				if(!data.errors){
+					console.log(data);
+					let user = data.userData.user;
+					// remove loading
+					refreshUser(user);
+					refreshStks();
+				} else {
+					alert(data.errors)
+				}
+			})
 	};
 
 
@@ -58,7 +60,6 @@ const Portfolio = ({ logout, user ,stocks, shares, refreshStks, refreshUser }) =
 			<main className='portfolio__container'>
 
 			<div className="portfolio">
-				<h1>Portfolio(Current stock performance)</h1>
 				{stocks ?  <Stock stocks={stocks} shares={shares}/> : "No stocks yet "}
 			</div>
 

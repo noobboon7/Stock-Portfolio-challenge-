@@ -3,7 +3,7 @@ import Header from '../components/Header'
 import '../css/Transactions.css'
 const Transactions = ({stocks, user}) => {
 	const { first_name, last_name, email, wallet } = { ...user};
-	
+	console.log(stocks)
   return (
 		<div className='container'>
 			<Header />
@@ -15,7 +15,7 @@ const Transactions = ({stocks, user}) => {
 							? stocks.map((stock, idx) => {
 								return (
 									<li key={idx} className='list__item'>
-											BUY {stock.symbol} - {stock.latestPrice} Shares @
+											BUY {stock.symbol} - {stock.quantity} Shares @
 											{stock.price}
 										</li>
 									);

@@ -1,40 +1,39 @@
 import React from 'react';
-
-const Stock = ({stocks, shares}) => {
-	///////////// delete after implementing shares/////////////////
-  const stockAmounts = stocks.reduce((acc, stk) => {
-		acc[stk.symbol] = acc[stk.symbol] + stk.quantity || 1;
-		return acc;
-	}, {}); 
-	////////////////////////////////////////////////////////
-
-
-
+// adds all the values of your stocks at current rate
+const Stock = ({shares}) => {
+	const totalPortfolio = Object.values({ ...shares }).reduce((acc, cur) => (cur.quantity * cur.latestPrice) + acc, 0 );
+	
 	const parseStocks = () => {
-		let arr = [], stk ;
+		let arr = [], 
+		stk,
+		style;
 
 		for (let i in shares) {
 			stk = shares[i]
-
-			arr.push(<li key={i}> {i} - {stk.quantity} Shares -- Current Price: {stk.latestPrice} -- value: {(stk.quantity * stk.latestPrice).toFixed(2)}</li>)
+			// Performace styling of stock
+			if(shares[i].open < shares[i].latestPrice ){
+				 style = {color: 'green'};
+			} else if (shares[i].open === shares[i].latestPrice){
+				 style = { color: 'grey' };
+			} else {
+				 style = { color: 'red' };
+			}
+			// stock information 
+			arr.push(
+				<li key={i}>
+					{i} - {stk.quantity} Shares  
+					Current Price: <span style={style}>{stk.latestPrice}</span> 
+					-- value: {(stk.quantity * stk.latestPrice).toFixed(2)}
+				</li>
+			);
 		}
 		return arr
 	};
-
+	// render portfolio
   return (
 		<div>
-			<ul>
-				{parseStocks()}
-				<li>
-				Display red when the current price is less than the day’s open price. 
-				</li> 
-				<li>
-				Display grey when the current price is equal to the day’s open price. •
-				</li> 
-				<li>
-				Display green when the current price is greater than the day’s open price.
-				</li>
-			</ul>
+			<h1>Portfolio(${shares ? totalPortfolio.toFixed(2) : 0})</h1>
+			<ul>{parseStocks()}</ul>
 		</div>
 	);
 }

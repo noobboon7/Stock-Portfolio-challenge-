@@ -82,55 +82,44 @@ const App = () => {
 		});
 	};
 
-		const getUserStocks = () => {
-			let shares;
-			fetch(`http://localhost:3000/api/v1/getStocks`, {
-				method: "GET",
-				headers: {
-					"Content-Type": "application/json",
-					"Accept": "application/json",
-					"Authorization": localStorage.token,
-				}
-			})
-				.then(res => res.json())
-				.then(data => {
-					setUserStocks(data);
-					shares = data.reduce((acc, el) => {
-						acc[el.symbol] = acc[el.symbol] + 1 || 1;
-						return acc;
-					}, {})
-					
-					getStockInfo(Object.keys(shares).join(","), shares);
-
-					// console.log(Object.keys(shares).join(','))
-					// setUserShares(shares)
-					// Parameter values must be comma-delimited when requesting multiple.
-				});
-			}; 
-
-		const getStockInfo = (symbols, shares) => {
-			fetch(
-				`${BASE_URL}/market/batch?filter=companyName,open,latestPrice&symbols=${symbols}&types=quote&token=${API_KEY}`,
-			)
-			.then(res => res.json())
-			.then(data => {userFormatShares({ ...data }, shares);});
-		};
-
-		const userFormatShares = (sharesInfo, shares) => {
-			// console.log(sharesInfo['A']);
-			// console.log(shares);
-			// setUserShares(sharesInfo)
-
-			for(let i in shares){
-				sharesInfo[i].quote.quantity =  shares[i];
-				sharesInfo[i] = sharesInfo[i].quote;
-				// console.log(sharesInfo);
+	const getUserStocks = () => {
+		let shares;
+		fetch(`http://localhost:3000/api/v1/getStocks`, {
+			method: "GET",
+			headers: {
+				"Content-Type": "application/json",
+				"Accept": "application/json",
+				"Authorization": localStorage.token,
 			}
-			setUserShares(sharesInfo)
+		})
+			.then(res => res.json())
+			.then(data => {
+				setUserStocks(data);
+				shares = data.reduce((acc, el) => {
+					acc[el.symbol] = acc[el.symbol] + 1 || 1;
+					return acc;
+				}, {})				
+				// Parameter values must be comma-delimited when requesting multiple.
+				getStockInfo(Object.keys(shares).join(","), shares);
+			});
+		}; 
+
+	const getStockInfo = (symbols, shares) => {
+		fetch(
+			`${BASE_URL}/market/batch?filter=companyName,open,latestPrice&symbols=${symbols}&types=quote&token=${API_KEY}`,
+		)
+		.then(res => res.json())
+		.then(data => {userFormatShares({ ...data }, shares);});
+	};
+
+	const userFormatShares = (sharesInfo, shares) => {
+
+		for(let i in shares){
+			sharesInfo[i].quote.quantity =  shares[i];
+			sharesInfo[i] = sharesInfo[i].quote;
 		}
-		
-		
-				console.log(userShares);
+		setUserShares(sharesInfo)
+	};
 
 	return (
 		<div className='App'>
