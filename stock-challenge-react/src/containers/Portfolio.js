@@ -7,10 +7,10 @@ import "../css/Portfolio.css";
 const Portfolio = ({ logout, user ,stocks, shares, refreshStks, refreshUser }) => {
 	const { wallet, email } = { ...user };
 	const API_KEY = process.env.REACT_APP_IEX_API_KEY;
+	const SERVER_URL = `https://stock-portfolio-api-v1.herokuapp.com/`;
 
 	// this can go in ticker
 	const fetchStockIEX = (symbol, quantity) => {
-		console.log("receiving:", symbol, quantity)
 		fetch(
 			`https://sandbox.iexapis.com/stable/stock/${symbol}/batch?types=quote,news&range=1m&last=10&token=${API_KEY}`,
 		)
@@ -25,12 +25,12 @@ const Portfolio = ({ logout, user ,stocks, shares, refreshStks, refreshUser }) =
 				} 
 			})
 			.catch(function() {
-				alert("Tiker symbol Not found?");
+				alert("Ticker symbol Not found?");
 			});
 	};
 	// can use token instead of email
 	const buyStockFetch = stock => {
-		fetch(`http://localhost:3000/api/v1/buyStock`, {
+		fetch(`${SERVER_URL}api/v1/buyStock`, {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
@@ -41,7 +41,6 @@ const Portfolio = ({ logout, user ,stocks, shares, refreshStks, refreshUser }) =
 			.then(res => res.json())
 			.then(data => {
 				if(!data.errors){
-					console.log(data);
 					let user = data.userData.user;
 					// remove loading
 					refreshUser(user);

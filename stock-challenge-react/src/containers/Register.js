@@ -3,19 +3,17 @@ import { Button, FormGroup, FormControl, FormLabel } from "react-bootstrap";
 import "../css/Register.css";
 import { NavLink } from "react-router-dom";
 
+const SERVER_URL = `https://stock-portfolio-api-v1.herokuapp.com/`;
+
 export default function Register({login}){
   const [first_name, setFirstName] = useState("");
   const [last_name, setLastName] = useState("");
   const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
-
-
-
-	// console.log(user);
 		
 	const createUser = async (newUser) => {
 
-		const res = await fetch("http://localhost:3000/api/v1/users", {
+		const res = await fetch(`${SERVER_URL}/api/v1/users`, {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
@@ -27,7 +25,6 @@ export default function Register({login}){
 		if(!data.errors){
 			login(data.user)
 			localStorage.setItem('token',data.token)
-			console.log(data)
 		} else {
 			alert(data.errors)
 			console.error(data.errors)

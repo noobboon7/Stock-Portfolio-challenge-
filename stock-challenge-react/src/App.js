@@ -8,7 +8,7 @@ import './css/App.css';
 
 const BASE_URL = `https://sandbox.iexapis.com/stable/stock/`;
 const API_KEY = process.env.REACT_APP_IEX_API_KEY;
-
+const SERVER_URL = process.env.REACT_APP_DB;
 
 const App = () => {
 	const [loggedIn, setLogin] = useState(!true);
@@ -18,7 +18,6 @@ const App = () => {
 
 	const localToken = localStorage.token;
 	
-	// fix on login 
 	useEffect(() => {
 		if(localToken){
 			// set loading
@@ -30,7 +29,6 @@ const App = () => {
 	useEffect(() => {
 		if(user ){
 			setLogin(true);
-			// getUserStocks(); 
 			// remove loading
 			console.log('user useEffect ran');
 		}
@@ -38,7 +36,7 @@ const App = () => {
 	
 	// auto login in session user
 	const fetchCurrentUser = () => {
-		fetch(`http://localhost:3000/api/v1/auto_login`, {
+		fetch(`${SERVER_URL}/api/v1/auto_login`, {
         method: "GET",
         headers: {
           'Content-Type': 'application/json',
@@ -59,7 +57,7 @@ const App = () => {
 	
 	// login returning user
 	const fetchUser = (userParams) => {
-		fetch(`http://localhost:3000/api/v1/login`, {
+		fetch(`${SERVER_URL}api/v1/login`, {
 			method: 'POST',
 			headers: {
 				"Content-Type": "application/json",
@@ -69,7 +67,6 @@ const App = () => {
 		})
 		.then(res => res.json())
 		.then(data => {
-			console.log(data)
 			if(!data.errors){
 				// set user to state and localstorage for auto login
 				setUser(data.user);
@@ -84,7 +81,7 @@ const App = () => {
 
 	const getUserStocks = () => {
 		let shares;
-		fetch(`http://localhost:3000/api/v1/getStocks`, {
+		fetch(`${SERVER_URL}/api/v1/getStocks`, {
 			method: "GET",
 			headers: {
 				"Content-Type": "application/json",

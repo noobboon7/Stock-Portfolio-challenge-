@@ -3,7 +3,7 @@ import Header from '../components/Header'
 import '../css/Transactions.css'
 const Transactions = ({stocks, user, logout}) => {
 	const { first_name, last_name, email, wallet } = { ...user};
-	// console.log(stocks)
+	
   return (
 		<div className='container'>
 			<Header logout={logout}/>

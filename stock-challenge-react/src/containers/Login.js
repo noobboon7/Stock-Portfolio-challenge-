@@ -8,7 +8,6 @@ const Login = ({fetchLogin}) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   
-  // console.log()
   const validateForm = () => {
     return email.length > 0 && password.length > 0;
   }
