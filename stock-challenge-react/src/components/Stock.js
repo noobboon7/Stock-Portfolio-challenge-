@@ -9,11 +9,14 @@ const Stock = ({stocks, shares}) => {
 	////////////////////////////////////////////////////////
 
 
-	
+
 	const parseStocks = () => {
-		let arr = []
-		for (let i in stockAmounts) {
-			arr.push(<li key={i}> {i} - {stockAmounts[i]} Shares </li>)
+		let arr = [], stk ;
+
+		for (let i in shares) {
+			stk = shares[i]
+
+			arr.push(<li key={i}> {i} - {stk.quantity} Shares -- Current Price: {stk.latestPrice} -- value: {(stk.quantity * stk.latestPrice).toFixed(2)}</li>)
 		}
 		return arr
 	};
@@ -22,13 +25,6 @@ const Stock = ({stocks, shares}) => {
 		<div>
 			<ul>
 				{parseStocks()}
-					
-					
-					logic
-				<li>
-				Current values should be based on the latest price and quantity owned for a given stock.
-				</li> 
-					UI 
 				<li>
 				Display red when the current price is less than the day’s open price. 
 				</li> 
