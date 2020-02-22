@@ -1,12 +1,15 @@
 import React from 'react';
 
-const Stock = ({stocks}) => {
-
+const Stock = ({stocks, shares}) => {
+	///////////// delete after implementing shares/////////////////
   const stockAmounts = stocks.reduce((acc, stk) => {
 		acc[stk.symbol] = acc[stk.symbol] + stk.quantity || 1;
 		return acc;
 	}, {}); 
+	////////////////////////////////////////////////////////
 
+
+	
 	const parseStocks = () => {
 		let arr = []
 		for (let i in stockAmounts) {

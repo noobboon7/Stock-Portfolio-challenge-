@@ -99,24 +99,34 @@ const App = () => {
 						acc[el.symbol] = acc[el.symbol] + 1 || 1;
 						return acc;
 					}, {})
+					
+					getStockInfo(Object.keys(shares).join(","), shares);
+
 					// console.log(Object.keys(shares).join(','))
-					setUserShares(shares)
+					// setUserShares(shares)
 					// Parameter values must be comma-delimited when requesting multiple.
-					getStockInfo(Object.keys(shares).join(","));
 				});
 			}; 
 
-		const getStockInfo = (symbols) => {
+		const getStockInfo = (symbols, shares) => {
 			fetch(
 				`${BASE_URL}/market/batch?filter=companyName,open,latestPrice&symbols=${symbols}&types=quote&token=${API_KEY}`,
 			)
 			.then(res => res.json())
-			.then(data => {userFormatShares({ ...data });});
+			.then(data => {userFormatShares({ ...data }, shares);});
 		};
 
-		const userFormatShares = (shares) => {
-			
-			console.log(shares);
+		const userFormatShares = (sharesInfo, shares) => {
+			// console.log(sharesInfo['A']);
+			// console.log(shares);
+			// setUserShares(sharesInfo)
+
+			for(let i in shares){
+				sharesInfo[i].quote.quantity =  shares[i];
+				sharesInfo[i] = sharesInfo[i].quote;
+				// console.log(sharesInfo);
+			}
+			setUserShares(sharesInfo)
 		}
 		
 		
@@ -144,6 +154,7 @@ const App = () => {
 							logout={setLogin}
 							user={user}
 							stocks={userStocks}
+							shares={userShares}
 							refreshStks={getUserStocks}
 							refreshUser={setUser}
 						/>

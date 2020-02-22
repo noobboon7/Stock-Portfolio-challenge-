@@ -7,7 +7,6 @@ import "../css/Portfolio.css";
 const Portfolio = ({ logout, user ,stocks, shares, refreshStks, refreshUser }) => {
 	const { wallet, email } = { ...user };
 	const API_KEY = process.env.REACT_APP_IEX_API_KEY;
-	// const thing = shares.forEach(s => console.log(s))
 
 	// this can go in ticker
 	const fetchStockIEX = (symbol, quantity) => {
@@ -60,7 +59,7 @@ const Portfolio = ({ logout, user ,stocks, shares, refreshStks, refreshUser }) =
 
 			<div className="portfolio">
 				<h1>Portfolio(Current stock performance)</h1>
-				{stocks ?  <Stock stocks={stocks}/> : "No stocks yet "}
+				{stocks ?  <Stock stocks={stocks} shares={shares}/> : "No stocks yet "}
 			</div>
 
 			<div>
