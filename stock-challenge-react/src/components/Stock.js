@@ -1,4 +1,5 @@
 import React from 'react';
+import '../css/Stock.css'
 // adds all the values of your stocks at current rate
 const Stock = ({shares}) => {
 	const totalPortfolio = Object.values({ ...shares }).reduce((acc, cur) => (cur.quantity * cur.latestPrice) + acc, 0 );
@@ -20,20 +21,24 @@ const Stock = ({shares}) => {
 			}
 			// stock information 
 			arr.push(
-				<li key={i}>
-					{i} - {stk.quantity} Shares  
-					Current Price: <span style={style}>{stk.latestPrice}</span> 
-					-- value: {(stk.quantity * stk.latestPrice).toFixed(2)}
-				</li>
+				<li className='stock' key={i}>
+					<b>{i}</b> - {stk.quantity} Shares @ <span style={style}>${stk.latestPrice}</span>  ${(stk.quantity * stk.latestPrice).toFixed(2)}
+				</li>,
 			);
 		}
 		return arr
 	};
 	// render portfolio
   return (
-		<div>
+		<div className='stock__container'>
 			<h1>Portfolio(${shares ? totalPortfolio.toFixed(2) : 0})</h1>
-			<ul>{parseStocks()}</ul>
+			<div className='labels'>
+				<span>Symbol</span>
+				<span>Quantity</span>
+				<span>Last Price</span>
+				<span>Market Value</span>
+			</div>
+			<ul className='stock__list'>{parseStocks()}</ul>
 		</div>
 	);
 }

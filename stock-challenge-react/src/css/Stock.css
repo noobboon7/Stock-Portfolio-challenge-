@@ -1,0 +1,33 @@
+.stock__container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+}
+.labels{
+  display: flex;
+  align-content: space-between;
+}
+.labels span { 
+  padding: 1rem 1rem 0 1rem;
+  font-weight: 700;
+}
+.stock__list {
+  /* align-content: center; */
+  /* align-items: center; */
+  list-style: none;
+  margin: 5px;
+  margin-top: 0;
+  padding: 1rem;
+  padding-top: 0;
+}
+.stock {
+  margin: 1rem;
+  padding: 1.7rem ;
+  text-align: center;
+  height: 5rem;
+  align-self: center;
+  box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+  font-size: 20px;
+}

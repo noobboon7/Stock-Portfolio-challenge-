@@ -1,17 +1,17 @@
 import React from 'react'
 import Header from '../components/Header'
 import '../css/Transactions.css'
-const Transactions = ({stocks, user}) => {
+const Transactions = ({stocks, user, logout}) => {
 	const { first_name, last_name, email, wallet } = { ...user};
-	console.log(stocks)
+	// console.log(stocks)
   return (
 		<div className='container'>
-			<Header />
+			<Header logout={logout}/>
 			<div className='transactions'>
 				<div className="purchases">
 					<h1>Transactions</h1>
 					<ol>
-						{stocks
+						{stocks.length > 0
 							? stocks.map((stock, idx) => {
 								return (
 									<li key={idx} className='list__item'>

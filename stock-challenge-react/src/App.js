@@ -13,8 +13,8 @@ const API_KEY = process.env.REACT_APP_IEX_API_KEY;
 const App = () => {
 	const [loggedIn, setLogin] = useState(!true);
 	const [user, setUser] = useState(null);
-	const [userStocks, setUserStocks] = useState(null);
-	const [userShares, setUserShares] = useState(null);
+	const [userStocks, setUserStocks] = useState([]);
+	const [userShares, setUserShares] = useState([]);
 
 	const localToken = localStorage.token;
 	
@@ -154,7 +154,7 @@ const App = () => {
 					exact
 					path='/Transactions'
 					render={routerProps => (
-						<Transactions user={user} stocks={userStocks} />
+						<Transactions user={user} stocks={userStocks} logout={setLogin} />
 					)}
 				/>
 			</Switch>

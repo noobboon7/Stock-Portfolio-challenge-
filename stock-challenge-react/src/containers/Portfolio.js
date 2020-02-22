@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import Stock from "../components/Stock";
 import Ticker from "../components/Ticker";
 import Header from "../components/Header";
@@ -60,7 +60,7 @@ const Portfolio = ({ logout, user ,stocks, shares, refreshStks, refreshUser }) =
 			<main className='portfolio__container'>
 
 			<div className="portfolio">
-				{stocks ?  <Stock stocks={stocks} shares={shares}/> : "No stocks yet "}
+				{stocks.length > 0 ?  <Stock stocks={stocks} shares={shares}/> : "No stocks yet "}
 			</div>
 
 			<div>
