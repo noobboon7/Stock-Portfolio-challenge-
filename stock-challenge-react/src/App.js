@@ -6,11 +6,15 @@ import Register from './containers/Register';
 import Transactions from './containers/Transactions';
 import './css/App.css';
 
- 
+const BASE_URL = `https://sandbox.iexapis.com/stable/stock/`;
+const API_KEY = process.env.REACT_APP_IEX_API_KEY;
+
+
 const App = () => {
 	const [loggedIn, setLogin] = useState(!true);
 	const [user, setUser] = useState(null);
 	const [userStocks, setUserStocks] = useState(null);
+	const [userShares, setUserShares] = useState(null);
 
 	const localToken = localStorage.token;
 	
@@ -79,20 +83,45 @@ const App = () => {
 	};
 
 		const getUserStocks = () => {
+			let shares;
 			fetch(`http://localhost:3000/api/v1/getStocks`, {
 				method: "GET",
 				headers: {
 					"Content-Type": "application/json",
 					"Accept": "application/json",
 					"Authorization": localStorage.token,
-				},
+				}
 			})
 				.then(res => res.json())
 				.then(data => {
 					setUserStocks(data);
+					shares = data.reduce((acc, el) => {
+						acc[el.symbol] = acc[el.symbol] + 1 || 1;
+						return acc;
+					}, {})
+					// console.log(Object.keys(shares).join(','))
+					setUserShares(shares)
+					// Parameter values must be comma-delimited when requesting multiple.
+					getStockInfo(Object.keys(shares).join(","));
 				});
-		}; 
-				
+			}; 
+
+		const getStockInfo = (symbols) => {
+			fetch(
+				`${BASE_URL}/market/batch?filter=companyName,open,latestPrice&symbols=${symbols}&types=quote&token=${API_KEY}`,
+			)
+			.then(res => res.json())
+			.then(data => {userFormatShares({ ...data });});
+		};
+
+		const userFormatShares = (shares) => {
+			
+			console.log(shares);
+		}
+		
+		
+				console.log(userShares);
+
 	return (
 		<div className='App'>
 			{loggedIn ? <Redirect to='/Portfolio' /> : <Redirect to='/Login' />}
@@ -132,5 +161,4 @@ const App = () => {
 		</div>
 	);
 }
-// {...routerProps} what is again?
 export default App;
