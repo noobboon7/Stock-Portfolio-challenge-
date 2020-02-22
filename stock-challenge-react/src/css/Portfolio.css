@@ -12,11 +12,15 @@ header {
   padding-bottom: 2rem;
   border-bottom: 1px solid rgba(65, 64, 64, 0.973);
 }
-.portfolio {
+.portfolio__container {
   display: flex;
   justify-content: space-between;
 
   margin: 1rem 0 1rem 0;
+}
+
+.portfolio {
+  width: 65%;
   padding: 1.5rem;
   box-shadow: 2px 2px 7px 2px rgba(0, 0, 0, 0.2);
   background-color: rgba(235, 233, 233, 0.178);

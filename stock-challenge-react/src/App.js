@@ -11,38 +11,28 @@ const App = () => {
 	const [loggedIn, setLogin] = useState(!true);
 	const [user, setUser] = useState(null);
 	const [userStocks, setUserStocks] = useState(null);
-	const localToken = localStorage.token;
-	console.log(userStocks)
-	
-	useEffect(() => {
-		if(user){
-			setLogin(true);
-			console.log('user useEffect ran');
-		}
-	},[user]);
 
+	const localToken = localStorage.token;
+	
+	// fix on login 
 	useEffect(() => {
 		if(localToken){
+			// set loading
 			fetchCurrentUser(localToken);
-			getUserStocks();
 			console.log('token useEffect ran');
 		}
 	}, [localToken]);
-
-
-	const getUserStocks = () => {
-		fetch(`http://localhost:3000/api/v1/getStocks`, {
-			method: "GET",
-			headers: {
-				"Content-Type": "application/json",
-				Accept: "application/json",
-				Authorization: localStorage.token,
-			},
-		})
-			.then(res => res.json())
-			.then(data => setUserStocks(data));
-	};
-
+	
+	useEffect(() => {
+		if(user ){
+			setLogin(true);
+			// getUserStocks(); 
+			// remove loading
+			console.log('user useEffect ran');
+		}
+	},[user]);
+	
+	// auto login in session user
 	const fetchCurrentUser = () => {
 		fetch(`http://localhost:3000/api/v1/auto_login`, {
         method: "GET",
@@ -56,13 +46,14 @@ const App = () => {
 		.then(data => {
 			if(!data.errors){
 				setUser(data);
+				getUserStocks();
 			} else {
 				alert(data.errors);
 			}
 		});
 	};
 	
-
+	// login returning user
 	const fetchUser = (userParams) => {
 		fetch(`http://localhost:3000/api/v1/login`, {
 			method: 'POST',
@@ -74,17 +65,33 @@ const App = () => {
 		})
 		.then(res => res.json())
 		.then(data => {
+			console.log(data)
 			if(!data.errors){
 				// set user to state and localstorage for auto login
-				setUser(data);
-				// set stocks for user
+				setUser(data.user);
 				localStorage.setItem("token", data.token);
+				getUserStocks();
 			}else {
 				alert(data.errors);
 				console.error(data.errors);
 			}
 		});
 	};
+
+		const getUserStocks = () => {
+			fetch(`http://localhost:3000/api/v1/getStocks`, {
+				method: "GET",
+				headers: {
+					"Content-Type": "application/json",
+					"Accept": "application/json",
+					"Authorization": localStorage.token,
+				},
+			})
+				.then(res => res.json())
+				.then(data => {
+					setUserStocks(data);
+				});
+		}; 
 				
 	return (
 		<div className='App'>
@@ -93,21 +100,33 @@ const App = () => {
 			<Switch>
 				<Route
 					path='/Register'
-					render={routerProps => <Register login={setUser}/>}
+					render={routerProps => <Register login={setUser} />}
 				/>
 				<Route
 					path='/Login'
 					render={routerProps => <Login fetchLogin={fetchUser} />}
 				/>
+
 				<Route
 					exact
 					path='/Portfolio'
-					render={routerProps => <Portfolio logout={setLogin} userData={{...user}} />}
+					render={routerProps => (
+						<Portfolio
+							logout={setLogin}
+							user={user}
+							stocks={userStocks}
+							refreshStks={getUserStocks}
+							refreshUser={setUser}
+						/>
+					)}
 				/>
+
 				<Route
 					exact
 					path='/Transactions'
-				render={routerProps => <Transactions stocks={userStocks} userData={user} />}
+					render={routerProps => (
+						<Transactions user={user} stocks={userStocks} />
+					)}
 				/>
 			</Switch>
 		</div>

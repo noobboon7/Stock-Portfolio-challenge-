@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Button, FormGroup, FormControl, FormLabel } from "react-bootstrap";
 // import "../css/Ticker.css"; 
 
-const Ticker = ({wallet, fetchStock}) => {
+const Ticker = ({fetchStock}) => {
 	const [stock, setStock] = useState("");
 	const [quantity, setQuantity] = useState("");
 
@@ -17,7 +17,6 @@ const Ticker = ({wallet, fetchStock}) => {
 
 	return (
 		<div className='Ticker'>
-			<h2>Wallet(funds: {wallet})</h2>
 			<form onSubmit={handleSubmit}>
 				<FormGroup controlId='stock' bsSize='large'>
 					<FormLabel>Ticker</FormLabel>

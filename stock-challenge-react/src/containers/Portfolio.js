@@ -4,11 +4,10 @@ import Ticker from "../components/Ticker";
 import Header from "../components/Header";
 import "../css/Portfolio.css";
 
-const Portfolio = ({ logout, userData }) => {
-	console.log(userData)
-	const { wallet, email } = { ...userData };
-	const [fetchedStock, setFetchedStock] = useState(null);
+const Portfolio = ({ logout, user ,stocks, shares, refreshStks, refreshUser }) => {
+	const { wallet, email } = { ...user };
 	const API_KEY = process.env.REACT_APP_IEX_API_KEY;
+	// const thing = shares.forEach(s => console.log(s))
 
 	// this can go in ticker
 	const fetchStockIEX = (symbol, quantity) => {
@@ -18,43 +17,56 @@ const Portfolio = ({ logout, userData }) => {
 			.then(res => res.json())
 			.then(data => {
 				// console.dir(data.quote);
-				let setStock = data.quote,
-					numStocks = parseInt(quantity),
-					{ symbol, latestPrice } = { ...setStock };
-
-				// set loading
-				buyStockFetch({ numStocks, symbol, latestPrice, email });
+				if (!data) {
+					let setStock = data.quote,
+						numStocks = parseInt(quantity),
+						{ symbol, latestPrice } = { ...setStock };
+					// set loading
+					buyStockFetch({ numStocks, symbol, latestPrice, email });
+				} else {
+				}
+			})
+			.catch(function() {
+				alert("Tiker symbol Not found?")
 			});
 	};
-
+	// can use token instead of email
 	const buyStockFetch = stock => {
 		fetch(`http://localhost:3000/api/v1/buyStock`, {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
-				Accept: "application/json",
+				"Accept": "application/json",
 			},
 			body: JSON.stringify(stock),
 		})
 			.then(res => res.json())
 			.then(data => {
-				let obj = data.userData;
-				console.log(obj);
-				// setFetchedStock(obj);
+				let user = data.userData.user;
+				console.log(user);
+				console.log(data);
+				refreshUser(user);
+				refreshStks();
 				// remove loading
 			});
 	};
-	console.log(fetchedStock)
+
+
 	return (
 		<div className='container'>
 			<Header logout={logout} />
 
-			<div>
+			<main className='portfolio__container'>
+
+			<div className="portfolio">
 				<h1>Portfolio(Current stock performance)</h1>
+				{stocks ?  <Stock stocks={stocks}/> : "No stocks yet "}
 			</div>
-			<main className='portfolio'>
-				<Stock symbol={fetchedStock} />
-				<Ticker fetchStock={fetchStockIEX} wallet={wallet} />
+
+			<div>
+				<h2>Wallet - {wallet}</h2>
+				<Ticker fetchStock={fetchStockIEX} />
+			</div>
 			</main>
 		</div>
 	);
