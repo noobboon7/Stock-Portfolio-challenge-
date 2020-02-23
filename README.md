@@ -7,7 +7,7 @@ This is a full stack application built using ruby on rails as an api and react.j
 
 ## Demo Application
 
-pending
+[DEMO](https://stoxk.netlify.com/)
 
 ### More about Developer Jerry V
 
