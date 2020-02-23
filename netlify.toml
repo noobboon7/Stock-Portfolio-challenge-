@@ -11,4 +11,4 @@
   publish = "/stock-challenge-react/build/"
 
   # Default build command.
-  command = "npm build"
+  command = "npm run build"
