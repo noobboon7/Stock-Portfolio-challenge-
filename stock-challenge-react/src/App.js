@@ -80,7 +80,8 @@ const App = () => {
 	};
 
 	const getUserStocks = () => {
-		let shares;
+		let shares,
+		shareQuantity;
 		fetch(`${SERVER_URL}/api/v1/getStocks`, {
 			method: "GET",
 			headers: {
@@ -91,13 +92,18 @@ const App = () => {
 		})
 			.then(res => res.json())
 			.then(data => {
+				console.log(data)
 				setUserStocks(data);
 				shares = data.reduce((acc, el) => {
 					acc[el.symbol] = acc[el.symbol] + 1 || 1;
 					return acc;
-				}, {})				
+				}, {})
+				shareQuantity = data.reduce((acc, el) => {
+					acc[el.symbol] = acc[el.symbol] + el.quantity || 1;
+					return acc;
+				}, {});
 				// Parameter values must be comma-delimited when requesting multiple.
-				getStockInfo(Object.keys(shares).join(","), shares);
+				getStockInfo(Object.keys(shares).join(","), shareQuantity);
 			});
 		}; 
 

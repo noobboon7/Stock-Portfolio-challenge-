@@ -41,6 +41,7 @@ const Portfolio = ({ logout, user ,stocks, shares, refreshStks, refreshUser }) =
 			.then(res => res.json())
 			.then(data => {
 				if(!data.errors){
+					console.log(data)
 					let user = data.userData.user;
 					// remove loading
 					refreshUser(user);
