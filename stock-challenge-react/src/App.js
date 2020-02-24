@@ -19,23 +19,20 @@ const App = () => {
 	const localToken = localStorage.token;
 	
 	useEffect(() => {
-		if(localToken){
+		if(localStorage.token){
 			// set loading
-			fetchCurrentUser(localToken);
-			// console.log('token useEffect ran');
+			fetchCurrentUser();
+			console.log('token useEffect ran');
+			// return () => {
+			// 	console.log("clean up token");
+			// }
 		}
-	}, [localToken]);
+	}, []);
 	
-	useEffect(() => {
-		if(user ){
-			setLogin(true);
-			// remove loading
-			// console.log('user useEffect ran');
-		}
-	},[user]);
 	
 	// auto login in session user
 	const fetchCurrentUser = () => {
+		console.log(!localToken)
 		fetch(`${SERVER_URL}/api/v1/auto_login`, {
         method: "GET",
         headers: {
@@ -49,6 +46,7 @@ const App = () => {
 			if(!data.errors){
 				setUser(data);
 				getUserStocks();
+				setLogin(true);
 			} else {
 				alert(data.errors);
 			}
@@ -72,6 +70,7 @@ const App = () => {
 				setUser(data.user);
 				localStorage.setItem("token", data.token);
 				getUserStocks();
+				setLogin(true);
 			}else {
 				alert(data.errors);
 				console.error(data.errors);
