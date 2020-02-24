@@ -22,7 +22,7 @@ const App = () => {
 		if(localToken){
 			// set loading
 			fetchCurrentUser(localToken);
-			console.log('token useEffect ran');
+			// console.log('token useEffect ran');
 		}
 	}, [localToken]);
 	
@@ -30,7 +30,7 @@ const App = () => {
 		if(user ){
 			setLogin(true);
 			// remove loading
-			console.log('user useEffect ran');
+			// console.log('user useEffect ran');
 		}
 	},[user]);
 	
@@ -92,14 +92,14 @@ const App = () => {
 		})
 			.then(res => res.json())
 			.then(data => {
-				console.log(data)
+
 				setUserStocks(data);
 				shares = data.reduce((acc, el) => {
 					acc[el.symbol] = acc[el.symbol] + 1 || 1;
 					return acc;
 				}, {})
 				shareQuantity = data.reduce((acc, el) => {
-					acc[el.symbol] = acc[el.symbol] + el.quantity || 1;
+					acc[el.symbol] = acc[el.symbol] + el.quantity || el.quantity;
 					return acc;
 				}, {});
 				// Parameter values must be comma-delimited when requesting multiple.
@@ -110,13 +110,12 @@ const App = () => {
 	const getStockInfo = (symbols, shares) => {
 		fetch(
 			`${BASE_URL}/market/batch?filter=companyName,open,latestPrice&symbols=${symbols}&types=quote&token=${API_KEY}`,
-		)
-		.then(res => res.json())
-		.then(data => {userFormatShares({ ...data }, shares);});
-	};
-
-	const userFormatShares = (sharesInfo, shares) => {
-
+			)
+			.then(res => res.json())
+			.then(data => {userFormatShares({ ...data }, shares);});
+		};
+		
+		const userFormatShares = (sharesInfo, shares) => {
 		for(let i in shares){
 			sharesInfo[i].quote.quantity =  shares[i];
 			sharesInfo[i] = sharesInfo[i].quote;

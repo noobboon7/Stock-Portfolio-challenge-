@@ -47,7 +47,7 @@ const Portfolio = ({ logout, user ,stocks, shares, refreshStks, refreshUser }) =
 					refreshUser(user);
 					refreshStks();
 				} else {
-					alert(data.errors)
+					alert(data.errors);
 				}
 			})
 	};
