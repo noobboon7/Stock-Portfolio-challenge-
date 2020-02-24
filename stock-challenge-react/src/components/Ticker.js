@@ -7,7 +7,7 @@ const Ticker = ({fetchStock}) => {
 	const [quantity, setQuantity] = useState("");
 
 	const validateForm = () => {
-		return stock.length > 0 && quantity > 0;
+		return stock.length > 0 && (quantity > 0 && quantity % 1 === 0 ) ;
 	};
 
 	const handleSubmit = event => {

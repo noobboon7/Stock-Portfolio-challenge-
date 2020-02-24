@@ -3,7 +3,7 @@ import '../css/Stock.css'
 // adds all the values of your stocks at current rate
 const Stock = ({shares}) => {
 	const totalPortfolio = Object.values({ ...shares }).reduce((acc, cur) => (cur.quantity * cur.latestPrice) + acc, 0 );
-	console.log(shares)
+	// console.log(shares)
 	const parseStocks = () => {
 		let arr = [], 
 		stk,
