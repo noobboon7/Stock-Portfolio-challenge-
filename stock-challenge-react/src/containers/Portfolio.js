@@ -5,6 +5,7 @@ import Header from "../components/Header";
 import "../css/Portfolio.css";
 
 const Portfolio = ({ logout, user ,stocks, shares, refreshStks, refreshUser }) => {
+	// const [isLoading, setLoading] = useState(false);
 	const { wallet, email } = { ...user };
 	const API_KEY = process.env.REACT_APP_IEX_API_KEY;
 	const SERVER_URL = `https://stock-portfolio-api-v1.herokuapp.com/`;

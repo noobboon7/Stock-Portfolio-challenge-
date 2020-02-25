@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { withRouter, NavLink } from "react-router-dom";
-
-import { Button, FormGroup, FormControl, FormLabel } from "react-bootstrap";
+import { Button, FormGroup, FormControl, FormLabel, Spinner } from "react-bootstrap";
 import '../css/Login.css';
 
 const Login = ({fetchLogin}) => {
+	const [isLoading, setLoading] = useState(false);
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+	const [password, setPassword] = useState("");
   
   const validateForm = () => {
     return email.length > 0 && password.length > 0;
@@ -14,6 +14,7 @@ const Login = ({fetchLogin}) => {
 
   const handleSubmit = event => {
 		event.preventDefault();
+		setLoading(true)
     fetchLogin({email, password});
   }
 
@@ -39,9 +40,23 @@ const Login = ({fetchLogin}) => {
 						placeholder='Password'
 					/>
 				</FormGroup>
+
+				{isLoading ? 
+				<Button variant="primary" disabled>
+					<Spinner
+						as="span"
+						animation="grow"
+						size="sm"
+						role="status"
+						aria-hidden="true"
+					/>
+					Loading...
+				</Button>
+						:
 				<Button block bsSize='large' disabled={!validateForm()} type='submit'>
 					Login
 				</Button>
+			}
 			</form>
 			<div className='register__link'>
 				<h5>

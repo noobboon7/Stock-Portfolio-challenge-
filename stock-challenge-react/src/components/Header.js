@@ -4,11 +4,12 @@ import Button from "react-bootstrap/Button";
 
 
 const Header = ({logout}) => {
+
   const handleLogout = () => {
     logout(false);
     localStorage.removeItem("token");
   };
-
+  // history.location.pathname
   return(
     <header>
       <Button variant='danger' onClick={handleLogout}>

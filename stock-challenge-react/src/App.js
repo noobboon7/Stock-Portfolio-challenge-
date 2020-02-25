@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import { Route, Redirect, Switch } from "react-router-dom";
+import { Route, Redirect, Switch, withRouter } from "react-router-dom";
 import Portfolio from './containers/Portfolio';
 import Login from './containers/Login';
 import Register from './containers/Register';
@@ -10,17 +10,16 @@ const BASE_URL = `https://sandbox.iexapis.com/stable/stock/`;
 const API_KEY = process.env.REACT_APP_IEX_API_KEY;
 const SERVER_URL = process.env.REACT_APP_DB;
 
-const App = () => {
+const App = ({history}) => {
 	const [loggedIn, setLogin] = useState(!true);
 	const [user, setUser] = useState(null);
 	const [userStocks, setUserStocks] = useState([]);
 	const [userShares, setUserShares] = useState([]);
 
 	const localToken = localStorage.token;
-	
+	// console.log(history);
 	useEffect(() => {
 		if(localStorage.token){
-			// set loading
 			fetchCurrentUser();
 			console.log('token useEffect ran');
 			// return () => {
@@ -162,4 +161,4 @@ const App = () => {
 		</div>
 	);
 }
-export default App;
+export default withRouter(App);
