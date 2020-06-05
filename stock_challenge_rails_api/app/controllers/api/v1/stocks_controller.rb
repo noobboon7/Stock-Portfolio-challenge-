@@ -11,7 +11,8 @@ class Api::V1::StocksController < ApplicationController
       
       # calc the new balance in wallet and update
       new_balance = (user.wallet - total_cost).round(2)
-      user.update_attribute(:wallet, new_balance)
+      # user.update_attribute(:wallet, new_balance)
+      user.update(wallet: new_balance)
       
       # create stock 
       stock = Stock.create(price: params[:latestPrice].round(2), symbol: params[:symbol], quantity: params[:numStocks], user_id: id)

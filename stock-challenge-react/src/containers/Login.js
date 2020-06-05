@@ -14,7 +14,7 @@ const Login = ({fetchLogin}) => {
 
   const handleSubmit = event => {
 		event.preventDefault();
-		setLoading(true)
+		setLoading(true);
     fetchLogin({email, password});
   }
 
@@ -53,7 +53,7 @@ const Login = ({fetchLogin}) => {
 					Loading...
 				</Button>
 						:
-				<Button block bsSize='large' disabled={!validateForm()} type='submit'>
+				<Button block bssize='large' disabled={!validateForm()} type='submit'>
 					Login
 				</Button>
 			}
